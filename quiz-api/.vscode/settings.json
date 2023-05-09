@@ -1,0 +1,12 @@
+{
+    
+    "python.autoComplete.extraPaths": [
+        
+    ],
+
+    "python.pythonPath": "D:/Cours/Dev web/quiz-app/quiz-api/venv/Scripts/python.exe",
+    "python.analysis.extraPaths": [],
+    
+
+   
+}
