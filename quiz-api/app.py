@@ -9,9 +9,11 @@ def hello_world():
 	x = 'world'
 	return f"Hello le sang, {x}. Welcome !"
 
-@app.route('/2')
-def hello_worldbis():
-	x = 'run'
-	return f"Hello le sang, {x}. Welcome !"
+@app.route('/quiz-info', methods=['GET'])
+def GetQuizInfo():
+	return {"size": 0, "scores": []}, 200
+
+
+
 if __name__ == "__main__":
     app.run()
