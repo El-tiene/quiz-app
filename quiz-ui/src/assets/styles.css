@@ -1,0 +1,43 @@
+body {
+  background: #fff url(fond.jpg) center center/cover no-repeat;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #f5f5f5;
+}
+
+.start-quiz {
+
+  margin-left: -75px;
+  font-family: Arial, sans-serif;
+
+}
+
+.home-page {
+  margin-left: -20px;
+  margin-bottom: 20px;
+}
+
+.question-edit {
+  color: yellow;
+  margin-left: -100px;
+
+}
+
+.question-detail {
+  color: yellow;
+}
+
+.NewQuiz-page {
+  margin-left: -150px;
+}
+
+.question-list {
+  margin-left: -100px;
+  color: yellow;
+}
