@@ -7,7 +7,7 @@
         <input type="text" class="form-control" id="player-name" v-model="username" />
         <p>{{ username }}</p>
       </div>
-      <router-link to="/questionPage">
+      <router-link to="/QuestionsManager">
         <button type="button" class="btn btn-primary" @click="launchNewQuiz">C'est parti !!!</button>
       </router-link>
     </form>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import quizApiService from "@/services/QuizApiService";
+//import quizApiService from "@/services/QuizApiService";
 import participationStorageService from "@/services/ParticipationStorageService";
 
 export default {

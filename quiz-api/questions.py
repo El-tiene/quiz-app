@@ -137,7 +137,7 @@ def getQuestionById(request, questionId):
             cursor = conn.cursor()
             cursor.execute(f"SELECT * FROM question WHERE id = {questionId}")
             question_data = cursor.fetchone()
-
+            print("debug")
             if question_data is None:
                 return 'Question not found', 404
 
@@ -170,12 +170,14 @@ def getQuestionById(request, questionId):
     
 def getQuestionByPosition(position):
     try:
+        print("debut fonction",position)
         with sqlite3.connect('MyDataBase.db') as conn:
-            conn.row_factory = sqlite3.Row
+            #conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
+            print("debut requete")
             cursor.execute(f"SELECT * FROM question WHERE position = {position}")
             question_data = cursor.fetchone()
-
+            print("questiondata:",question_data)
             if question_data is None:
                 return 'Question not found', 404
 

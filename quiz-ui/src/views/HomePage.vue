@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <h1 class="title">Bienvenue sur le Quiz de MMA</h1>
+    <h1 class="title">Bienvenue sur le Quiz du MMA</h1>
     <div class="score-item" v-for="score in sortedScores" :key="score.id">
       Score: {{ score }}
     </div>
@@ -17,6 +17,7 @@
 
 <script>
 import quizApiService from "@/services/QuizApiService";
+import participationStorageService from "@/services/ParticipationStorageService.js"
 
 export default {
   name: "HomePage",
@@ -37,11 +38,18 @@ export default {
     }
   },
 
+  
+
   computed: {
-    sortedScores() {
+  sortedScores() {
+    if (Array.isArray(this.registeredScores)) {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       return this.registeredScores.sort((a, b) => b - a); // Tri des scores dans l'ordre décroissant
     }
-  },
+    return []; // Retourne un tableau vide si this.registeredScores n'est pas un tableau
+  }
+},
+
 
   methods: {
     launchNewQuiz() {

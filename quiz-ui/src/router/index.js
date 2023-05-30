@@ -8,6 +8,10 @@ import QuestionPage from '../views/QuestionPage.vue'
 import QuestionList from '../views/QuestionList.vue'
 import QuestionEdit from '../views/QuestionEdit.vue'
 import QuestionDetail from '../views/QuestionDetail.vue'
+import QuestionManager from '../components/QuestionsManager.vue'
+import QuestionDisplay from '../components/QuestionDisplay.vue'
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +60,16 @@ const router = createRouter({
       path: '/questionDetail',
       name: 'QuestionDetail',
       component: QuestionDetail
+    },
+    {
+      path: '/questionsManager',
+      name: 'QuestionsManager',
+      component: QuestionManager
+    },
+    {
+      path: '/questionDisplay',
+      name: 'QuestionDisplay',
+      component: QuestionDisplay
     }
 
   ]

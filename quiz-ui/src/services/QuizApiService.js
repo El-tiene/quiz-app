@@ -30,8 +30,50 @@ export default {
   getQuizInfo() {
     return this.call("get", "quiz-info");
   },
-  getQuestion(position) {
-    return this.call("get", `questions/${position}`);
-  }
+  
+  getQuestionById(questionId) {
+    return this.call("get", `questions/${questionId}`);
+  },
+
+  getQuestionByPosition(position) {
+    return this.call("get", `/questions?position=${position}`);
+  },
+
+  submitParticipantAnswers(answers) {
+    return this.call("post", "participations", answers);
+  },
+  
+  login(password) {
+    return this.call("post", "login", { password });
+  },
+  
+  addQuestion(question) {
+    return this.call("post", "questions", question);
+  },
+  
+  rebuildDatabase() {
+    return this.call("post", "rebuild-db");
+  },
+  
+  submitParticipation(answers) {
+    return this.call("post", "participations", answers);
+  },
+  
+  updateQuestion(questionId, question) {
+    return this.call("put", `questions/${questionId}`, question);
+  },
+  
+  deleteQuestion(questionId) {
+    return this.call("delete", `questions/${questionId}`);
+  },
+  
+  deleteAllQuestions() {
+    return this.call("delete", "questions/all");
+  },
+  
+  deleteAllParticipations() {
+    return this.call("delete", "participations/all");
+  },
+  
 
 };

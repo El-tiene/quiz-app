@@ -2,8 +2,8 @@
   <div class="score-page">
     <h1>Page de Scores</h1>
     <p>Votre score : {{ score }}</p>
-    <p>Classement : {{ ranking }}</p>
-    <p>Meilleurs scores :</p>
+    <!-- <p>Classement : {{ ranking }}</p>
+    <p>Meilleurs scores :</p> -->
     <ul>
       <li v-for="(score, index) in topScores" :key="index">
         {{ score }}
@@ -19,19 +19,19 @@ import quizApiService from "@/services/QuizApiService";
 export default {
   data() {
     return {
-      score: 0,
       ranking: 0,
       topScores: [],
     };
   },
   created() {
     // Appel asynchrone pour récupérer les informations de score
+    //const myScore = this.$route.query.score;
     this.getScoreInfo();
   },
   methods: {
     async getScoreInfo() {
       try {
-        const response = await quizApiService.getScoreInfo();
+        const response = await quizApiService.getQuizInfo();
         this.score = response.score;
         this.ranking = response.ranking;
         this.topScores = response.topScores;
@@ -43,6 +43,13 @@ export default {
       this.$router.push('/');
     },
   },
+  computed: {
+  score() {
+    const scoreParam = this.$route.query.score;
+    return parseInt(scoreParam) || 0;
+  },
+},
+
 };
 </script>
 <style>

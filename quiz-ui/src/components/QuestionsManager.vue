@@ -5,49 +5,61 @@
   </div>
 </template>
 
+
+
 <script>
 import QuestionDisplay from "@/components/QuestionDisplay.vue";
-import participationStorageService from "@/services/participationStorageService";
+//import participationStorageService from "@/services/participationStorageService";
+import quizApiService from "@/services/QuizApiService.js";
 
 export default {
+  name:"QuestionsManager",
   components: {
     QuestionDisplay
   },
   data() {
     return {
-      questions: [],
+      currentQuestion: {
+            questionTitle:"",
+            questionText:"",
+            possibleAnswers:[],
+            image:""
+        },
+      userAnswer: [],
       currentQuestionPosition: 1,
-      totalNumberOfQuestions: 0
+      totalNumberOfQuestions: 0,
+      score:0
     };
   },
-  created() {
-    this.loadQuestions();
+async created() {
+    const info = await quizApiService.getQuizInfo();
+    if (info.status === 200) {
+      this.loadQuestions(this.currentQuestionPosition);
+      this.totalNumberOfQuestions = info.data.size;
+    }
+    else{
+      console.error("Erreur récupération info");
+    }
+        
   },
   methods: {
-    async loadQuestions() {
-      try {
+    async loadQuestions(position) {
         // Appel asynchrone pour récupérer les questions du quiz
-        const response = await quizApiService.getQuestions();
-        this.questions = response.data;
-        this.totalNumberOfQuestions = this.questions.length;
-      } catch (error) {
-        console.error(error);
-      }
+        const questionRecup = await quizApiService.getQuestionByPosition(position);
+        this.currentQuestion.questionTitle = questionRecup.data.title;
+        this.currentQuestion.questionText = questionRecup.data.text;
+        this.currentQuestion.possibleAnswers = questionRecup.data.possibleAnswers;
+        this.currentQuestion.image = questionRecup.data.image;
     },
 
     async answerClickedHandler(answerIndex) {
-      // Récupérer la question actuelle
-      const currentQuestion = this.questions[this.currentQuestionPosition - 1];
-
-      // Vérifier si la réponse sélectionnée est correcte
-      const isCorrectAnswer = currentQuestion.correctAnswerIndex === answerIndex;
-
-      // Enregistrer la réponse de l'utilisateur dans le service de stockage de participation
-      participationStorageService.saveAnswer({
-        question: currentQuestion,
-        selectedAnswerIndex: answerIndex,
-        isCorrect: isCorrectAnswer
-      });
+      
+      const currentQuestion = this.currentQuestion;
+      if((currentQuestion.possibleAnswers[answerIndex])['isCorrect']==true){
+        
+        this.score++;
+        console.log("score=",this.score)
+      }
 
       // Passer à la question suivante
       this.currentQuestionPosition++;
@@ -55,12 +67,27 @@ export default {
       // Vérifier s'il reste des questions à afficher
       if (this.currentQuestionPosition <= this.totalNumberOfQuestions) {
         // Charger la prochaine question
-        await this.loadQuestionByPosition(this.currentQuestionPosition);
+        await this.loadQuestions(this.currentQuestionPosition);
       } else {
         // Fin du quiz
         this.endQuiz();
       }
     },
+    async endQuiz(){
+      //this.$router.push('ScorePage'+this.score)
+      // manager.vue
+      this.$router.push(`/scorePage?score=${this.score}`);
+    }
   }
 }
 </script>
+
+<style>
+h1{
+  margin-left: -350px;
+  color: yellow;
+  font-size: 60px;
+  font-family: 'Impact', fantasy;
+}
+</style>
+
